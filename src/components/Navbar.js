@@ -7,11 +7,13 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useLogout } from '../hooks/useLogout'
+import { useLogout } from '../hooks/useLogout';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 export default function NavBar() {
 
     const { logout } = useLogout();
+    const { user } =  useAuthContext();
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -29,8 +31,8 @@ export default function NavBar() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 LQ.LK
             </Typography>
-            <Button color="inherit" component={RouterLink} to="/login">Login</Button>
-            <Button color="inherit" onClick={logout}>Logout</Button>
+            {!user && (<Button color="inherit" component={RouterLink} to="/login">Login</Button>)}
+            {user && (<Button color="inherit" onClick={logout}>Logout</Button>)}
             </Toolbar>
         </AppBar>
         </Box>

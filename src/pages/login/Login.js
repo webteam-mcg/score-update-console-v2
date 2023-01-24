@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useLogin } from '../../hooks/useLogin';
 
 
 const theme = createTheme();
@@ -17,10 +18,11 @@ export default function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { login, error, isPending } = useLogin();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(email, password);
+        login(email, password);
     }
 
     return (
@@ -38,9 +40,10 @@ export default function Login() {
                     <Avatar sx={{ m: 1, bgcolor: 'secondary' }}>
                     <LockOutlinedIcon />
                     </Avatar>
-                    <Typography component="h1" variant="h5">
+                    <Typography component="h1" variant="h5" gutterBottom>
                     Sign in
                     </Typography>
+                    { error && <Typography variant="body2" color="error">{error}</Typography> }
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField
                         margin="normal"
@@ -66,14 +69,23 @@ export default function Login() {
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
                     />
-                    <Button
+                    {!isPending && <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
                         Sign In
-                    </Button>
+                    </Button>}
+                    {isPending && <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        disabled
+                        sx={{ mt: 3, mb: 2 }}
+                    >
+                        Loading
+                    </Button>}
                     </Box>
                 </Box>
             </Container>
