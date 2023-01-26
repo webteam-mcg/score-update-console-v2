@@ -1,6 +1,5 @@
 import { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import NavBar from './components/Navbar';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import { useAuthContext } from './hooks/useAuthContext';
@@ -12,7 +11,6 @@ function App() {
     <Fragment>
     {authIsReady && (
       <Router>
-        <NavBar/>
         <Routes>
           <Route 
             exact path="/" 
