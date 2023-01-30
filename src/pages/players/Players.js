@@ -13,14 +13,29 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
 import Dashboard from '../../components/Dashboard';
+import { useFirestore } from '../../hooks/useFirestore';
 
 export default function Players() {
 
     const [playerName, setPlayerName] = useState('');
     const [team, setTeam] = useState('');
+    const [captain, setCaptain] = useState(false);
+    const [wk, setWK] = useState(false);
+
+    const { addDocument} = useFirestore('players');
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        addDocument({
+            playerName,
+            team,
+            captain,
+            wk
+        });
+        setPlayerName('');
+        setTeam('');
+        setCaptain(false);
+        setWK(false);
     }
 
     return (
@@ -53,6 +68,7 @@ export default function Players() {
                         label="Player Name"
                         name="playerName"
                         autoFocus
+                        onChange={(e) => setPlayerName(e.target.value)}
                         value={playerName}
                     />
                     <InputLabel id="team-label">Team</InputLabel>
@@ -63,16 +79,17 @@ export default function Players() {
                         fullWidth
                         value={team}
                         label="Team"
+                        onChange={(e) => setTeam(e.target.value)}
                     >
                         <MenuItem value={"MCG"}>MCG</MenuItem>
                         <MenuItem value={"RCG"}>RCG</MenuItem>
                     </Select>
                     <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
+                        control={<Checkbox checked={captain} onChange={(e) => setCaptain(e.target.checked)} color="primary" />}
                         label="Captain"
                     />
                     <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
+                        control={<Checkbox checked={wk} onChange={(e) => setWK(e.target.checked)} color="primary" />}
                         label="Wicket Keeper"
                     />
                     <Button
