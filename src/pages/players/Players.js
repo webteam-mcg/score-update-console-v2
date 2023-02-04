@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -22,7 +22,7 @@ export default function Players() {
     const [captain, setCaptain] = useState(false);
     const [wk, setWK] = useState(false);
 
-    const { addDocument} = useFirestore('players');
+    const { addDocument, response } = useFirestore('players');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -32,11 +32,16 @@ export default function Players() {
             captain,
             wk
         });
-        setPlayerName('');
-        setTeam('');
-        setCaptain(false);
-        setWK(false);
     }
+
+    useEffect(() => {
+        if (response.success) {
+            setPlayerName('');
+            setTeam('');
+            setCaptain(false);
+            setWK(false);
+        }
+      }, [response.success]);
 
     return (
         <Dashboard>
