@@ -35,22 +35,22 @@ export default function Innings() {
                     </Typography>
                     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} marginLeft={20}>
                             <Grid xs={6} bgcolor="primary">
-                                <Button variant="contained" size="large" onClick={e => setInning("MCG", 1)}>
+                                <Button variant="contained" size="large" onClick={e => setInning("mcg", 1)}>
                                     Start MCG First Inning
                                 </Button>
                             </Grid>
                             <Grid xs={6}>
-                                <Button variant="contained" size="large" onClick={e => setInning("MCG", 2)}>
+                                <Button variant="contained" size="large" onClick={e => setInning("mcg", 2)}>
                                     Start MCG Second Inning
                                 </Button>
                             </Grid>
                             <Grid xs={6}>
-                                <Button variant="contained" size="large" onClick={e => setInning("RCG", 1)}>
+                                <Button variant="contained" size="large" onClick={e => setInning("rcg", 1)}>
                                     Start RCG First Inning
                                 </Button>
                             </Grid>
                             <Grid xs={6}>
-                                <Button variant="contained" size="large" onClick={e => setInning("RCG", 2)}>
+                                <Button variant="contained" size="large" onClick={e => setInning("rcg", 2)}>
                                     Start RCG Second Inning
                                 </Button>
                             </Grid>
