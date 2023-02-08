@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { doc, setDoc, arrayUnion, addDoc, collection, serverTimestamp } from "firebase/firestore"; 
 import { db } from "../firebase/config";
+import { useInning } from "./useInning";
 
 const displayName = (team, inning) => {
     if (team === "mcg" && inning === 1) {
@@ -16,6 +17,7 @@ const displayName = (team, inning) => {
 
 export const useInningSelector = () => {
     const [error, setError] = useState(null);
+    const { setupInning } = useInning();
 
     const liveRef = doc(db, 'main', 'live');
     const docRef = doc(db, 'main', 'config');
@@ -76,6 +78,11 @@ export const useInningSelector = () => {
         await addDoc(inningsRef, inningDoc)
         .catch(err => {
             setError(err.message);
+        })
+
+        setupInning({
+            team: team,
+            inning: inning
         })
     }
 
