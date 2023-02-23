@@ -6,15 +6,13 @@ import { useInning } from "./useInning";
 
 export const useMatchSetup = () => {
     const [error, setError] = useState(null);
-    const { team, inning } = useInning();
+    const { team, inning, setupMatch } = useInning();
 
     const liveRef = doc(db, 'main', 'live');
     const battingRef = collection(db, 'batting');
     const bowlingRef = collection(db, 'bowling');
 
     const setMatch = async (player1, player2, bowler) => {
-
-        console.log(team, inning, player1, player2, bowler);
 
         const liveDoc = {
             "player1.name": player1,
@@ -88,6 +86,12 @@ export const useMatchSetup = () => {
         .catch(err => {
             setError(err.message);
         });
+
+        setupMatch({
+            player1: player1,
+            player2: player2,
+            bowler: bowler
+        })
     }
 
     return { setMatch, error };

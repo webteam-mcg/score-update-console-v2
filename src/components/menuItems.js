@@ -28,7 +28,7 @@ export const menuItems = (
       </ListItemIcon>
       <ListItemText primary="Innings" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton component={Link} to="/setup">
       <ListItemIcon>
         <SettingsIcon />
       </ListItemIcon>

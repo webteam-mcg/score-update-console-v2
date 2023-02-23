@@ -1,4 +1,8 @@
-import { createContext, useReducer } from 'react';
+import { createContext, useReducer, useEffect } from 'react';
+import { doc, onSnapshot } from "firebase/firestore";
+import _ from 'lodash';
+
+import { db } from "../firebase/config";
 
 export const InningContext = createContext()
 
@@ -8,25 +12,60 @@ const inningReducer = (state, action) => {
         return {
             ...state,
             team: action.payload.team,
+            field: action.payload.team === 'mcg' ? 'rcg':'mcg',
             inning: action.payload.inning
+        }
+      case 'SETUP_MATCH':
+        return {
+          ...state,
+          player1: action.payload.player1,
+          player2: action.payload.player2,
+          bowler: action.payload.bowler
+        }
+      case 'INNING_IS_READY':
+        return {
+          ...state,
+          inningIsReady: true,
+          team: _.get(action.payload, 'team', null),
+          inning: _.get(action.payload, 'inning', null),
+          player1: _.get(action.payload, 'player1', null),
+          player2: _.get(action.payload, 'player2', null),
+          bowler: _.get(action.payload, 'bowler', null),
+          field: _.get(action.payload, 'team', null) === 'mcg' ? 'rcg':'mcg',
         }
     default:
         return state
   }
 }
 
-export function InningProvider({ children }) {
+export function InningContextProvider({ children }) {
   const [state, dispatch] = useReducer(inningReducer, {
     team: '',
-    inning: ''
+    field: '',
+    inning: '',
+    player1: '',
+    player2: '',
+    bowler: '',
+    inningIsReady: false
   })
 
   const setupInning = (inning) => {
     dispatch({ type: 'SETUP_INNING', payload: inning })
-}
+  }
+
+  const setupMatch = (match) => {
+    dispatch({ type: 'SETUP_MATCH', payload: match });
+  }
+
+  useEffect(() => {
+  const unsub = onSnapshot(doc(db, "main", "live"), (doc) => {
+      dispatch({ type: 'INNING_IS_READY', payload: doc.data() });
+      unsub();
+  });
+  }, []);
 
   return (
-    <InningContext.Provider value={{...state, setupInning}}>
+    <InningContext.Provider value={{...state, setupInning, setupMatch}}>
       {children}
     </InningContext.Provider>
   )

@@ -86,8 +86,8 @@ export default function Players() {
                         label="Team"
                         onChange={(e) => setTeam(e.target.value)}
                     >
-                        <MenuItem value={"MCG"}>MCG</MenuItem>
-                        <MenuItem value={"RCG"}>RCG</MenuItem>
+                        <MenuItem value={"mcg"}>MCG</MenuItem>
+                        <MenuItem value={"rcg"}>RCG</MenuItem>
                     </Select>
                     <FormControlLabel
                         control={<Checkbox checked={captain} onChange={(e) => setCaptain(e.target.checked)} color="primary" />}

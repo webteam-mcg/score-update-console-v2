@@ -41,7 +41,7 @@ export const useFirestore = (collectionName) => {
   const addDocument = async (doc) => {
     dispatch({ type: "IS_PENDING" });
 
-    addDoc(ref , { doc })
+    addDoc(ref , doc)
     .then(docRef => {
       dispatch({ type: "ADDED_DOCUMENT", payload: docRef });
     })
