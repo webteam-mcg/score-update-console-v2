@@ -28,8 +28,8 @@ const inningReducer = (state, action) => {
           inningIsReady: true,
           team: _.get(action.payload, 'team', null),
           inning: _.get(action.payload, 'inning', null),
-          player1: _.get(action.payload, 'player1', null),
-          player2: _.get(action.payload, 'player2', null),
+          player1: _.get(action.payload, 'player1.name', null),
+          player2: _.get(action.payload, 'player2.name', null),
           bowler: _.get(action.payload, 'bowler', null),
           field: _.get(action.payload, 'team', null) === 'mcg' ? 'rcg':'mcg',
         }

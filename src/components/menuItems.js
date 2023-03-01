@@ -7,6 +7,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PeopleIcon from '@mui/icons-material/People';
 import SportsCricketIcon from '@mui/icons-material/SportsCricket';
+import CommentIcon from '@mui/icons-material/Comment';
 
 export const menuItems = (
   <React.Fragment>
@@ -15,6 +16,12 @@ export const menuItems = (
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Home" />
+    </ListItemButton>
+    <ListItemButton component={Link} to="/setup">
+      <ListItemIcon>
+        <CommentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Commentry" />
     </ListItemButton>
     <ListItemButton component={Link} to="/players">
       <ListItemIcon>
