@@ -12,12 +12,23 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 import Dashboard from '../../components/Dashboard';
 import { useInning } from '../../hooks/useInning';
+import { useAddScore } from '../../hooks/useAddScore';
 
 export default function Home() {
 
-    const [extra, setExtra] = useState(0);
+    const { player1, player2, currentPlayer, updateStriker } = useInning();
+    const { updateScore, updateCurrentPlayer } = useAddScore();
 
-    const { player1, player2 } = useInning();
+    const [extra, setExtra] = useState(0);
+    const [striker, setStriker] = useState(currentPlayer);
+
+    const handleStriker = (event) => {
+        setStriker(event.target.value);
+        updateStriker({
+            player: event.target.value
+        });
+        updateCurrentPlayer(event.target.value);
+    }
 
     return (
         <Dashboard>
@@ -39,6 +50,8 @@ export default function Home() {
                             row
                             aria-labelledby="demo-row-radio-buttons-group-label"
                             name="row-radio-buttons-group"
+                            value={striker}
+                            onChange={handleStriker}
                         >
                             <FormControlLabel value="player1" control={<Radio />} label={player1} />
                             <FormControlLabel value="player2" control={<Radio />} label={player2} />
@@ -50,25 +63,25 @@ export default function Home() {
                         justifyContent="center"
                         alignItems="center"
                     >
-                        <Fab color="primary" aria-label="score0">
+                        <Fab color="primary" aria-label="score0" onClick={e => updateScore(0)}>
                             .
                         </Fab>
-                        <Fab color="primary" aria-label="score1">
+                        <Fab color="primary" aria-label="score1" onClick={e => updateScore(1)}>
                             1
                         </Fab>
-                        <Fab color="primary" aria-label="score2">
+                        <Fab color="primary" aria-label="score2" onClick={e => updateScore(2)}>
                             2
                         </Fab>
-                        <Fab color="primary" aria-label="score3">
+                        <Fab color="primary" aria-label="score3" onClick={e => updateScore(3)}>
                             3
                         </Fab>
-                        <Fab color="primary" aria-label="score4">
+                        <Fab color="primary" aria-label="score4" onClick={e => updateScore(4)}>
                             4
                         </Fab>
-                        <Fab color="primary" aria-label="score5">
+                        <Fab color="primary" aria-label="score5" onClick={e => updateScore(5)}>
                             5
                         </Fab>
-                        <Fab color="primary" aria-label="score6">
+                        <Fab color="primary" aria-label="score6" onClick={e => updateScore(6)}>
                             6
                         </Fab>
                     </Box>
