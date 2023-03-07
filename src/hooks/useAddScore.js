@@ -64,6 +64,39 @@ export const useAddScore = () => {
         });
     }
 
+    const addExtra = async (score, type) => {
+
+        const currentBall = balls+1;
+        const totalExtra = score+1;
+
+        const bowlingQuery = query(collection(db, "bowling"), where("inning", "==", inning), where("name", "==", bowler));
+        const inningQuery = query(collection(db, "innings"), where("inning", "==", inning), where("team", "==", team));
+
+        await updateDoc(liveRef, {
+            score: increment(totalExtra),
+            "bowler.score": increment(totalExtra),
+            [`thisOver.${currentBall}`]: type
+        });
+
+        const bowlingSnapshot = await getDocs(bowlingQuery);
+        bowlingSnapshot.forEach(async (bowlingDoc) => {
+            await updateDoc(doc(db, "bowling", bowlingDoc.id), {
+                score: increment(score)
+            });
+        });
+
+        const inningSnapshot = await getDocs(inningQuery);
+        inningSnapshot.forEach(async (inningDoc) => {
+            await updateDoc(doc(db, "innings", inningDoc.id), {
+                score: increment(score)
+            });
+        });
+
+        addScore({
+            balls: currentBall
+        });
+    }
+
     const updateCurrentPlayer = async (player) => {
 
         await updateDoc(liveRef, {
@@ -72,7 +105,8 @@ export const useAddScore = () => {
     }
 
     return { 
-        updateScore, 
+        updateScore,
+        addExtra, 
         updateCurrentPlayer,
         error 
     }

@@ -17,7 +17,7 @@ import { useAddScore } from '../../hooks/useAddScore';
 export default function Home() {
 
     const { player1, player2, currentPlayer, updateStriker } = useInning();
-    const { updateScore, updateCurrentPlayer } = useAddScore();
+    const { updateScore, updateCurrentPlayer, addExtra } = useAddScore();
 
     const [extra, setExtra] = useState(0);
     const [striker, setStriker] = useState(currentPlayer);
@@ -91,16 +91,16 @@ export default function Home() {
                         justifyContent="center"
                         alignItems="center"
                     >
-                        <Fab color="secondary" aria-label="wide">
+                        <Fab color="secondary" aria-label="wide" onClick={e => addExtra(extra, 'wd')}>
                             WIDE
                         </Fab>
-                        <Fab color="secondary" aria-label="nb">
+                        <Fab color="secondary" aria-label="nb" onClick={e => addExtra(extra, 'nb')}>
                             NB
                         </Fab>
-                        <Fab color="secondary" aria-label="b">
+                        <Fab color="secondary" aria-label="b" onClick={e => addExtra(extra, 'b')}>
                             B
                         </Fab>
-                        <Fab color="secondary" aria-label="lb">
+                        <Fab color="secondary" aria-label="lb" onClick={e => addExtra(extra, 'lb')}>
                             LB
                         </Fab>
                         <Select

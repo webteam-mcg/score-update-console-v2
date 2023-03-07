@@ -6,6 +6,7 @@ import { useInning } from './hooks/useInning';
 import Home from './pages/home/Home';
 import Innings from './pages/innings/Innings';
 import Login from './pages/login/Login';
+import Over from './pages/over/Over';
 import Players from './pages/players/Players';
 import Setup from './pages/setup/setup';
 
@@ -33,6 +34,10 @@ function App() {
           <Route 
             exact path="/setup" 
             element={ user ? <Setup/> : <Navigate to="/login" />} 
+          />
+          <Route 
+            exact path="/over" 
+            element={ user ? <Over/> : <Navigate to="/login" />} 
           />
           <Route path="/login" element={user ? <Navigate to="/" /> : <Login/>} />
         </Routes>
