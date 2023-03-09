@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { useNavigate } from "react-router-dom";
 
 import Dashboard from '../../components/Dashboard';
 import { useInning } from '../../hooks/useInning';
@@ -18,6 +19,7 @@ export default function Home() {
 
     const { player1, player2, currentPlayer, updateStriker } = useInning();
     const { updateScore, updateCurrentPlayer, addExtra } = useAddScore();
+    let navigate = useNavigate();
 
     const [extra, setExtra] = useState(0);
     const [striker, setStriker] = useState(currentPlayer);
@@ -121,7 +123,7 @@ export default function Home() {
                         <Fab color="error" aria-label="w">
                             W
                         </Fab>
-                        <Fab color="warning" aria-label="over">
+                        <Fab color="warning" aria-label="over" onClick={e => navigate("/over")}>
                             OVER
                         </Fab>
                     </Box>

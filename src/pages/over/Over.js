@@ -13,10 +13,12 @@ import Dashboard from '../../components/Dashboard';
 import { useMatchSetup } from "../../hooks/useMatchSetup";
 import { useCollection } from '../../hooks/useCollection';
 import { useInning } from '../../hooks/useInning';
+import { useNewOver } from '../../hooks/useNewOver';
 
 export default function Over() {
 
     const [bowler, setBowler] = useState('');
+    const { updateBowler } = useNewOver();
 
     const { setMatch } = useMatchSetup();
     const { team, field } = useInning();
@@ -24,9 +26,7 @@ export default function Over() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setMatch(
-            bowler
-        )
+        updateBowler(bowler);
     }
 
 

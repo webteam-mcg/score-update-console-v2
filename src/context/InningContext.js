@@ -33,6 +33,11 @@ const inningReducer = (state, action) => {
         ...state,
         currentPlayer: action.payload.player
       }
+      case 'UPDATE_OVER':
+        return {
+          ...state,
+          bowler: action.payload.bowler
+        }
     case 'INNING_IS_READY':
       return {
         ...state,
@@ -41,7 +46,7 @@ const inningReducer = (state, action) => {
         inning: _.get(action.payload, 'inning', null),
         player1: _.get(action.payload, 'player1.name', null),
         player2: _.get(action.payload, 'player2.name', null),
-        bowler: _.get(action.payload, 'bowler', null),
+        bowler: _.get(action.payload, 'bowler.name', null),
         field: _.get(action.payload, 'team', null) === 'mcg' ? 'rcg':'mcg',
         currentPlayer: _.get(action.payload, 'currentPlayer', null),
         balls: _.size(_.get(action.payload, 'thisOver', null))
@@ -80,6 +85,10 @@ export function InningContextProvider({ children }) {
     dispatch({ type: 'UPDATE_STRIKER', payload: player })
   }
 
+  const updateOver = (bowler) => {
+    dispatch({ type: 'UPDATE_OVER', payload: bowler })
+  }
+
   useEffect(() => {
   const unsub = onSnapshot(doc(db, "main", "live"), (doc) => {
       dispatch({ type: 'INNING_IS_READY', payload: doc.data() });
@@ -88,7 +97,7 @@ export function InningContextProvider({ children }) {
   }, []);
 
   return (
-    <InningContext.Provider value={{...state, setupInning, setupMatch, addScore, updateStriker}}>
+    <InningContext.Provider value={{...state, setupInning, setupMatch, addScore, updateStriker, updateOver}}>
       {children}
     </InningContext.Provider>
   )
