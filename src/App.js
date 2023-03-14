@@ -9,6 +9,7 @@ import Login from './pages/login/Login';
 import Over from './pages/over/Over';
 import Players from './pages/players/Players';
 import Setup from './pages/setup/setup';
+import Wicket from './pages/wicket/Wicket';
 
 function App() {
   const { authIsReady, user } = useAuthContext();
@@ -22,6 +23,10 @@ function App() {
           <Route 
             exact path="/" 
             element={ user ? <Home/> : <Navigate to="/login" />} 
+          />
+          <Route 
+            exact path="/wicket" 
+            element={ user ? <Wicket/> : <Navigate to="/login" />} 
           />
           <Route 
             exact path="/players" 
