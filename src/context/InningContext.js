@@ -37,7 +37,17 @@ const inningReducer = (state, action) => {
         return {
           ...state,
           bowler: action.payload.bowler
+      }
+      case 'UPDATE_PLAYER1':
+        return {
+          ...state,
+          player1: action.payload.player
         }
+        case 'UPDATE_PLAYER2':
+          return {
+            ...state,
+            player2: action.payload.player
+          }
     case 'INNING_IS_READY':
       return {
         ...state,
@@ -89,6 +99,14 @@ export function InningContextProvider({ children }) {
     dispatch({ type: 'UPDATE_OVER', payload: bowler })
   }
 
+  const updatePlayer1 = (player) => {
+    dispatch({ type: 'UPDATE_PLAYER1', payload: player })
+  }
+
+  const updatePlayer2 = (player) => {
+    dispatch({ type: 'UPDATE_PLAYER2', payload: player })
+  }
+
   useEffect(() => {
   const unsub = onSnapshot(doc(db, "main", "live"), (doc) => {
       dispatch({ type: 'INNING_IS_READY', payload: doc.data() });
@@ -97,7 +115,7 @@ export function InningContextProvider({ children }) {
   }, []);
 
   return (
-    <InningContext.Provider value={{...state, setupInning, setupMatch, addScore, updateStriker, updateOver}}>
+    <InningContext.Provider value={{...state, setupInning, setupMatch, addScore, updateStriker, updateOver, updatePlayer1, updatePlayer2}}>
       {children}
     </InningContext.Provider>
   )

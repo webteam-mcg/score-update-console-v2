@@ -8,34 +8,35 @@ import MenuItem from '@mui/material/MenuItem';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Unstable_Grid2';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import Dashboard from '../../components/Dashboard';
 import { useInning } from '../../hooks/useInning';
-import { useAddScore } from '../../hooks/useAddScore';
 import { useCollection } from '../../hooks/useCollection';
+import { useAddWicket } from "../../hooks/useAddWicket";
 
 export default function Wicket() {
 
-    const { player1, player2, currentPlayer, updateStriker, team, field, bowler, setPlayer1, setPlayer2, setBowler } = useInning();
-    const { updateScore, updateCurrentPlayer, addExtra } = useAddScore();
-    let navigate = useNavigate();
+    const { player1, player2, currentPlayer, team, field } = useInning();
+    const { addWicket } = useAddWicket();
 
-    const [extra, setExtra] = useState(0);
     const [striker, setStriker] = useState(currentPlayer);
+    const [wicketType, setWicketType] = useState('');
+    const [takenBy, setTakenBy] = useState('');
+    const [newPlayer, setNewPlayer] = useState('');
+
     const { documents } = useCollection('players');
 
-    const handleStriker = (event) => {
-        setStriker(event.target.value);
-        updateStriker({
-            player: event.target.value
-        });
-        updateCurrentPlayer(event.target.value);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        addWicket(
+            wicketType,
+            newPlayer,
+            striker,
+            takenBy
+        )
     }
 
     return (
@@ -55,6 +56,8 @@ export default function Wicket() {
                         flexDirection: 'column',
                         alignItems: 'center',
                         }}
+                        component="form" 
+                        onSubmit={handleSubmit}
                     >
                         <Typography component="h1" variant="h5" gutterBottom>
                             Wicket
@@ -72,7 +75,7 @@ export default function Wicket() {
                                         aria-labelledby="demo-row-radio-buttons-group-label"
                                         name="row-radio-buttons-group"
                                         value={striker}
-                                        onChange={handleStriker}
+                                        onChange={e => setStriker(e.target.value)}
                                     >
                                         <FormControlLabel value="player1" control={<Radio />} label={player1} />
                                         <FormControlLabel value="player2" control={<Radio />} label={player2} />
@@ -86,9 +89,9 @@ export default function Wicket() {
                                     id="team-select"
                                     required
                                     fullWidth
-                                    value={player1}
+                                    value={wicketType}
                                     label="Team"
-                                    onChange={(e) => setPlayer1(e.target.value)}
+                                    onChange={(e) => setWicketType(e.target.value)}
                                 >
                                     <MenuItem value={"b"}>Bowled</MenuItem>
                                     <MenuItem value={"c"}>Caught</MenuItem>
@@ -104,9 +107,9 @@ export default function Wicket() {
                                         id="team-select"
                                         required
                                         fullWidth
-                                        value={player2}
+                                        value={takenBy}
                                         label="Team"
-                                        onChange={(e) => setPlayer2(e.target.value)}
+                                        onChange={(e) => setTakenBy(e.target.value)}
                                     >
                                         {documents && team && documents.filter(player => player.team === field).map((player) => (
                                             <MenuItem 
@@ -125,9 +128,9 @@ export default function Wicket() {
                                     id="team-select"
                                     required
                                     fullWidth
-                                    value={bowler}
+                                    value={newPlayer}
                                     label="Team"
-                                    onChange={(e) => setBowler(e.target.value)}
+                                    onChange={(e) => setNewPlayer(e.target.value)}
                                 >
                                     {documents && team && documents.filter(player => player.team === team).map((player) => (
                                         <MenuItem 

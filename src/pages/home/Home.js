@@ -18,7 +18,7 @@ import { useAddScore } from '../../hooks/useAddScore';
 export default function Home() {
 
     const { player1, player2, currentPlayer, updateStriker } = useInning();
-    const { updateScore, updateCurrentPlayer, addExtra } = useAddScore();
+    const { updateScore, updateCurrentPlayer, addExtra, addWicket } = useAddScore();
     let navigate = useNavigate();
 
     const [extra, setExtra] = useState(0);
@@ -120,7 +120,7 @@ export default function Home() {
                             <MenuItem value={5}>5</MenuItem>
                             <MenuItem value={6}>6</MenuItem>
                         </Select>
-                        <Fab color="error" aria-label="w">
+                        <Fab color="error" aria-label="w" onClick={e => addWicket()}>
                             W
                         </Fab>
                         <Fab color="warning" aria-label="over" onClick={e => navigate("/over")}>

@@ -104,10 +104,24 @@ export const useAddScore = () => {
         });
     }
 
+    const addWicket = async () => {
+
+        const currentBall = balls+1;
+
+        await updateDoc(liveRef, {
+            wickets: increment(1),
+            balls: increment(1),
+            "bowler.wickets": increment(1),
+            "bowler.balls": increment(1),
+            [`thisOver.${currentBall}`]: "W"
+        });
+    }
+
     return { 
         updateScore,
         addExtra, 
         updateCurrentPlayer,
+        addWicket,
         error 
     }
 }
