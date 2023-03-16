@@ -36,7 +36,8 @@ const inningReducer = (state, action) => {
       case 'UPDATE_OVER':
         return {
           ...state,
-          bowler: action.payload.bowler
+          bowler: action.payload.bowler,
+          balls: 0
       }
       case 'UPDATE_PLAYER1':
         return {
