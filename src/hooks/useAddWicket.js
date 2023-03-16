@@ -13,9 +13,6 @@ export const useAddWicket = () => {
         const battingRef = collection(db, 'batting');
         const liveRef = doc(db, 'main', 'live');
 
-        const inningQuery = query(collection(db, "innings"), where("inning", "==", inning), where("team", "==", team));
-        const bowlingQuery = query(collection(db, "bowling"), where("inning", "==", inning), where("name", "==", bowler));
-
         let liveDoc = {};
         let outPlayerName = null;
         let outPlayerStatus = null;
@@ -87,22 +84,6 @@ export const useAddWicket = () => {
         battingSnapshot.forEach(async (batiingDoc) => {
             await updateDoc(doc(db, "batting", batiingDoc.id), {
                 status: outPlayerStatus
-            });
-        });
-
-        const inningSnapshot = await getDocs(inningQuery);
-        inningSnapshot.forEach(async (inningDoc) => {
-            await updateDoc(doc(db, "innings", inningDoc.id), {
-                balls: increment(1),
-                wickets: increment(1)
-            });
-        });
-
-        const bowlingSnapshot = await getDocs(bowlingQuery);
-        bowlingSnapshot.forEach(async (bowlingDoc) => {
-            await updateDoc(doc(db, "bowling", bowlingDoc.id), {
-                balls: increment(1),
-                wickets: increment(1)
             });
         });
     }

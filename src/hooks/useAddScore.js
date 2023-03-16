@@ -81,14 +81,14 @@ export const useAddScore = () => {
         const bowlingSnapshot = await getDocs(bowlingQuery);
         bowlingSnapshot.forEach(async (bowlingDoc) => {
             await updateDoc(doc(db, "bowling", bowlingDoc.id), {
-                score: increment(score)
+                score: increment(totalExtra)
             });
         });
 
         const inningSnapshot = await getDocs(inningQuery);
         inningSnapshot.forEach(async (inningDoc) => {
             await updateDoc(doc(db, "innings", inningDoc.id), {
-                score: increment(score)
+                score: increment(totalExtra)
             });
         });
 
@@ -106,6 +106,9 @@ export const useAddScore = () => {
 
     const addWicket = async () => {
 
+        const inningQuery = query(collection(db, "innings"), where("inning", "==", inning), where("team", "==", team));
+        const bowlingQuery = query(collection(db, "bowling"), where("inning", "==", inning), where("name", "==", bowler));
+
         const currentBall = balls+1;
 
         await updateDoc(liveRef, {
@@ -114,6 +117,22 @@ export const useAddScore = () => {
             "bowler.wickets": increment(1),
             "bowler.balls": increment(1),
             [`thisOver.${currentBall}`]: "W"
+        });
+
+        const inningSnapshot = await getDocs(inningQuery);
+        inningSnapshot.forEach(async (inningDoc) => {
+            await updateDoc(doc(db, "innings", inningDoc.id), {
+                balls: increment(1),
+                wickets: increment(1)
+            });
+        });
+
+        const bowlingSnapshot = await getDocs(bowlingQuery);
+        bowlingSnapshot.forEach(async (bowlingDoc) => {
+            await updateDoc(doc(db, "bowling", bowlingDoc.id), {
+                balls: increment(1),
+                wickets: increment(1)
+            });
         });
     }
 
