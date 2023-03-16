@@ -3,12 +3,14 @@ import { getFirestore, serverTimestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAhr9xd-voP2IqI4jbTWw-ssXnpqzclLM0",
-    authDomain: "lqlk-dev.firebaseapp.com",
-    projectId: "lqlk-dev",
-    storageBucket: "lqlk-dev.appspot.com",
-    messagingSenderId: "457135897810",
-    appId: "1:457135897810:web:00e08133aad1f6b332c10b"
+    apiKey: "AIzaSyB_fCrqzAGkDkAYDtdtERw_IMwoCgmkrJQ",
+    authDomain: "lqlk-5370b.firebaseapp.com",
+    databaseURL: "https://lqlk-5370b.firebaseio.com",
+    projectId: "lqlk-5370b",
+    storageBucket: "lqlk-5370b.appspot.com",
+    messagingSenderId: "612878491224",
+    appId: "1:612878491224:web:be9732520ddf14b97c742d",
+    measurementId: "G-0QQYMZPR82"
 };
 
 // init firebase
