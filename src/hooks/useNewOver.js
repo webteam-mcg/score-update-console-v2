@@ -68,9 +68,8 @@ export const useNewOver = () => {
                 bowler: bowler
             })
 
-            navigate("/")
         }
-
+        navigate("/");
     }
 
     return {
