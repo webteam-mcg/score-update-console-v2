@@ -88,7 +88,9 @@ export const useAddScore = () => {
         const inningSnapshot = await getDocs(inningQuery);
         inningSnapshot.forEach(async (inningDoc) => {
             await updateDoc(doc(db, "innings", inningDoc.id), {
-                score: increment(totalExtra)
+                score: increment(totalExtra),
+                'extra.total': increment(1),
+                [`extra.${type}`]: increment(1)
             });
         });
 
