@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { addDoc, collection, doc, serverTimestamp, updateDoc, query, where, getDocs, increment, getCountFromServer } from "firebase/firestore";
+import { addDoc, collection, doc, serverTimestamp, updateDoc, query, where, getDocs, getCountFromServer } from "firebase/firestore";
 
 import { db } from "../firebase/config";
 import { useInning } from '../hooks/useInning'
@@ -63,12 +63,10 @@ export const useNewOver = () => {
             .catch(err => {
                 setError(err.message);
             });
-
-            updateOver({
-                bowler: bowler
-            })
-
         }
+        updateOver({
+            bowler: bowler
+        });
         navigate("/");
     }
 

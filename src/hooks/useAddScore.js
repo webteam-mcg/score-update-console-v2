@@ -134,6 +134,10 @@ export const useAddScore = () => {
                 wickets: increment(1)
             });
         });
+
+        addScore({
+            balls: currentBall
+        });
     }
 
     return { 
