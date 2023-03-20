@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { doc, setDoc, arrayUnion, addDoc, collection, serverTimestamp } from "firebase/firestore"; 
 import { db } from "../firebase/config";
 import { useInning } from "./useInning";
@@ -16,6 +17,7 @@ const displayName = (team, inning) => {
 }
 
 export const useInningSelector = () => {
+    let navigate = useNavigate();
     const [error, setError] = useState(null);
     const { setupInning } = useInning();
 
@@ -83,7 +85,8 @@ export const useInningSelector = () => {
         setupInning({
             team: team,
             inning: inning
-        })
+        });
+        navigate("/setup");
     }
 
     return { setInning, error };

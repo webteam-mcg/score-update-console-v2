@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 import { db } from "../firebase/config";
 import { useInning } from "./useInning";
 
 
 export const useMatchSetup = () => {
+    let navigate = useNavigate();
     const [error, setError] = useState(null);
     const { team, inning, setupMatch } = useInning();
 
@@ -91,7 +93,8 @@ export const useMatchSetup = () => {
             player1: player1,
             player2: player2,
             bowler: bowler
-        })
+        });
+        navigate("/");
     }
 
     return { setMatch, error };

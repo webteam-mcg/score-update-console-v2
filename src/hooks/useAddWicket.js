@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { addDoc, collection, doc, serverTimestamp, updateDoc, query, where, getDocs, increment, getCountFromServer } from "firebase/firestore";
 
 import { db } from "../firebase/config";
 import { useInning } from '../hooks/useInning';
 
 export const useAddWicket = () => {
+    let navigate = useNavigate();
     const [error, setError] = useState(null);
     const { inning, team, bowler, player1, player2, updatePlayer1, updatePlayer2} = useInning();
     
@@ -86,6 +88,8 @@ export const useAddWicket = () => {
                 status: outPlayerStatus
             });
         });
+
+        navigate("/");
     }
 
     return {
